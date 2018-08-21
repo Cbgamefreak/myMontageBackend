@@ -14,18 +14,6 @@ module.exports = function(app) {
     });
   });
 
-  app.get("/api/authors/:name/:password", function(req, res) {
-    // Find one Author with the id in req.params.id and return them to the user with res.json
-    db.Author.findOne({
-      where: {
-        name: req.params.name,
-        password:req.params.password
-      },
-      include: [db.Post]
-    }).then(function(dbAuthor) {
-      res.json(dbAuthor);
-    });
-  });
 
   app.get("/api/authors/:id", function(req, res) {
     // Find one Author with the id in req.params.id and return them to the user with res.json
@@ -39,6 +27,22 @@ module.exports = function(app) {
       res.json(dbAuthor);
     });
   });
+
+  app.get("/api/authors/:name/:password", function(req, res) {
+    // Find one Author with the id in req.params.id and return them to the user with res.json
+
+    db.Author.findOne({
+      where: {
+        name: req.params.name,
+        password: req.params.password
+      },
+      include: [db.Post]
+    }).then(function(dbAuthor) {
+      res.json(dbAuthor);
+    })
+  });
+
+
 
   app.post("/api/authors", function(req, res) {
     // Create an Author with the data available to us in req.body

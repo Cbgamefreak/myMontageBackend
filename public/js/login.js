@@ -1,24 +1,31 @@
+
 var currentUserName;
 var password;
+
 localStorage.removeItem("user");
 
-$( ".login-button").on("click", function(){
-currentUserName = $(".usernameVal").val().trim()
-password = $(".passwordVal").val().trim()
-console.log(currentUserName)
+$("#login-button").on("click", function () {
+    event.preventDefault();
+    localStorage.clear();
+    currentUserName = $("#username-val").val().trim();
+    password = $("#password-val").val().trim();
 
-window.location.href = "/profile";
+     console.log(currentUserName);
 
-$.get("/api/authors/"+ currentUserName+"/"+password, function(data) {
-    console.log(data+"dataaaa")
-    console.log(data.name);
-    localStorage.setItem("user", data.id)
-    console.log(data.password);
+ 
+
+     $.get("/api/authors/" + currentUserName + "/" + password, function (data) {
+        if (!data){
+            alert("there is no user")
+        }
+        
+        localStorage.setItem("user", data.id)
+        console.log(localStorage);
+        window.location.href = "../user-profile.html";
 
     });
+    
 })
 
 
 //data.Posts
-
-
